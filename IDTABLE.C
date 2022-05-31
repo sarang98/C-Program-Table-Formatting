@@ -78,7 +78,7 @@ int main( void )
 	{
 		printf("\nEnter the name : ");
 		scanf("%[^\n]s",buffer);
-		for(count = 0 ; count < 49 && s[i].name[j] == '\0' ; count++)
+		for(count = 0 ; count < 49 ; count++)
 			s[i].name[count] = buffer[count];
 		printf("Enter your age : ");
 		scanf("%d",&s[i].age);
