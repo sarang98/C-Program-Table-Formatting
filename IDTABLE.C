@@ -1,7 +1,8 @@
 #include<stdio.h>
 #include<conio.h>
 
-#define NUM 2
+//defines number of input
+#define NUM 10
 
 struct student
 {
@@ -10,6 +11,7 @@ struct student
 	char gender;
 };
 
+//create border to the table
 void das(int dash)
 {
 	int i;
@@ -19,6 +21,8 @@ void das(int dash)
 	printf("+");
 }
 
+//@return - it returns the size of longest string "name" from the input
+//it always returns the value more than 4 to keep the Name column looks in shape
 int checkLongest(struct student *s)
 {
 	int longest = strlen(s[0].name);
@@ -30,11 +34,18 @@ int checkLongest(struct student *s)
 		if(longest < newSize)
 			longest = newSize;
 	}
+	if(longest < 4)
+		return 4;
+	
 	return longest;
 }
 
+//createing the variable of type struct student
 struct student s;
 
+//special function to print the Name column 
+//having width 2 characters more than the 
+//longest name
 void nameColumn(char *word, int longest)
 {
 	int count;
@@ -66,20 +77,34 @@ int main( void )
 	int count = 0;
 	int dash = 33;
 	char pole = '|';
+	//dummy variable is used to eliminate the problem
+	//of escaping the character input after integer input
 	char dummy;
+	//buffer is used to store the input name
 	char buffer[8000];
+	//table headers
 	char name[5] = "Name";
 	char age[4] = "age";
 	char gender[7] = "gender";
 
 	clrscr();
-
+	
+	//input data
 	for(i = 0 ; i < NUM ; i++)
 	{
 		printf("\nEnter the name : ");
 		scanf("%[^\n]s",buffer);
 		for(count = 0 ; count < 49 ; count++)
-			s[i].name[count] = buffer[count];
+		{
+			if((buffer[count] >= 65 && buffer[count] <= 90)	|| (buffer[count] >= 97 && buffer[count] <= 122) || buffer[count] == ' ')
+			{
+				s[i].name[count] = buffer[count];
+			}
+			else
+			{
+				break;
+			}
+		}
 		printf("Enter your age : ");
 		scanf("%d",&s[i].age);
 		scanf("%c",&dummy);
@@ -88,12 +113,15 @@ int main( void )
 		scanf("%c");
 	}
 
+	//stores the size of longest string (always 4 or more than 4)
 	longest = checkLongest(s);
 
+	//table size is dependent on the length of longest name
 	dash = longest + 18 + 2; //longest(Name) + age and gender + extra space
 
+	//output
 	printf("\n\nDisplay output\n");
-
+	
 	das(dash);
 
 	printf("\n%c",pole);
@@ -101,7 +129,7 @@ int main( void )
 	printf("%c%5s%3c%8s%2c\n",pole,age,pole,gender,pole);
 
 	das(dash);
-
+	
 	for(i = 0 ; i < NUM; i++)
 	{
 		printf("\n%c",pole);
